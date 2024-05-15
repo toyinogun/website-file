@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    environment {
+        AWS_CREDENTIALS = credentials('AWS')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/toyinogun/website-file.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo "No build steps needed for static site"'
+            }
+        }
+        stage('Deploy to S3') {
+            steps {
+                withAWS(credentials: 'pipeline {
+    agent any
+    environment {
+        AWS_CREDENTIALS = credentials('AWS')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/toyinogun/website-file.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo "No build steps needed for static site"'
+            }
+        }
+        stage('Deploy to S3') {
+            steps {
+                withAWS(credentials: 'AWS') {
+                    script {
+                        def s3Bucket = 'my-portfolio-website-2024'
+                        sh """
+                            aws s3 sync . s3://${s3Bucket}/ --exclude ".git/*" --delete
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
+') {
+                    script {
+                        def s3Bucket = 'my-portfolio-website-2024'
+                        sh """
+                            aws s3 sync . s3://${s3Bucket}/ --exclude ".git/*" --delete
+                        """
+                    }
+                }
+            }
+        }
+    }
+}
